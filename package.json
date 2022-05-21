@@ -1,0 +1,18 @@
+{
+    "name": "hermejs",
+    "packageManager": "pnpm@7.1.2",
+    "license": "LGPL-3.0-only",
+    "repository": {
+        "url": "https://github.com/js6pak/hermejs.git",
+        "type": "git"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.25.0",
+        "@typescript-eslint/parser": "^5.25.0",
+        "eslint": "^8.16.0",
+        "ts-node": "^10.7.0"
+    },
+    "scripts": {
+        "lint": "eslint packages/*/{src,scripts}/**/*.ts"
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "name": "@hermejs/core",
+    "version": "0.1.0",
+    "license": "LGPL-3.0-only",
+    "repository": {
+        "url": "https://github.com/js6pak/hermejs.git",
+        "type": "git",
+        "directory": "packages/core"
+    },
+    "type": "module",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "@hermejs/data": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "^17.0.31",
+        "typescript": "^4.6.4"
+    }
+}

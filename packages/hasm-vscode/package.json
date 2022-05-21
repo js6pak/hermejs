@@ -1,0 +1,41 @@
+{
+    "name": "hasm",
+    "displayName": "HASM",
+    "description": "Syntax highlighting for hermejs assembly",
+    "version": "0.1.0",
+    "license": "LGPL-3.0-only",
+    "repository": {
+        "url": "https://github.com/js6pak/hermejs.git",
+        "type": "git",
+        "directory": "packages/hasm-vscode"
+    },
+    "publisher": "js6pak",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "hasm",
+                "aliases": [
+                    "HASM",
+                    "hasm"
+                ],
+                "extensions": [
+                    ".hasm"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "hasm",
+                "scopeName": "source.hasm",
+                "path": "./syntaxes/hasm.tmLanguage.json"
+            }
+        ]
+    }
+}

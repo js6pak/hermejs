@@ -1,0 +1,20 @@
+{
+    "ts-node": {
+        "transpileOnly": true
+    },
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "lib": ["esnext"],
+        "esModuleInterop": true,
+        
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+
+        "strict": true,
+        "noImplicitAny": true
+    },
+    "exclude": ["**/dist", "**/node_modules"]
+}
