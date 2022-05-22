@@ -15,7 +15,8 @@
         "hasm": "./dist/index.js"
     },
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "start": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm src/index.ts"
     },
     "dependencies": {
         "@hermejs/core": "workspace:*",

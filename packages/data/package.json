@@ -14,7 +14,7 @@
         "dist"
     ],
     "scripts": {
-        "generate": "rm -rf generated/*.ts && NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node -T --esm scripts/generate.ts",
+        "generate": "rm -rf generated/*.ts && NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm scripts/generate.ts",
         "build": "pnpm run generate && tsc"
     },
     "devDependencies": {
