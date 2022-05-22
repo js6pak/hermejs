@@ -44,11 +44,13 @@ importers:
     specifiers:
       '@types/node': ^17.0.31
       node-fetch: ^3.2.4
+      rimraf: ^3.0.2
       ts-node: ^10.7.0
       typescript: ^4.6.4
     devDependencies:
       '@types/node': 17.0.31
       node-fetch: 3.2.4
+      rimraf: 3.0.2
       ts-node: 10.8.0_l47be6km5p57gglrggidw5gsgm
       typescript: 4.6.4
 
