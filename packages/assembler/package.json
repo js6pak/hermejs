@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@hermejs/core": "workspace:*",
+        "@hermejs/data": "workspace:*",
         "chalk": "^5.0.1",
         "commander": "^9.2.0"
     },

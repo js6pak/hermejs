@@ -13,6 +13,7 @@
         "ts-node": "^10.7.0"
     },
     "scripts": {
-        "lint": "eslint packages/*/{src,scripts}/**/*.ts"
+        "lint": "eslint packages/*/{src,scripts}/**/*.ts",
+        "build": "pnpm -r --filter=./packages/* run build"
     }
 }
