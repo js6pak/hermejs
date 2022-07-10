@@ -37,5 +37,11 @@
                 "path": "./syntaxes/hasm.tmLanguage.json"
             }
         ]
+    },
+    "scripts": {
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "vsce": "^2.9.2"
     }
 }
