@@ -16,7 +16,7 @@
     },
     "scripts": {
         "build": "tsc",
-        "start": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm src/index.ts"
+        "start": "cross-env NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm src/index.ts"
     },
     "dependencies": {
         "@hermejs/core": "workspace:*",
@@ -26,6 +26,7 @@
     },
     "devDependencies": {
         "@types/node": "^17.0.31",
+        "cross-env": "^7.0.3",
         "typescript": "^4.6.4"
     }
 }

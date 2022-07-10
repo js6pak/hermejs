@@ -14,11 +14,12 @@
         "dist"
     ],
     "scripts": {
-        "generate": "rimraf -rf generated/*.ts && NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm scripts/generate.ts",
+        "generate": "rimraf -rf generated/*.ts && cross-env NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node-esm scripts/generate.ts",
         "build": "pnpm run generate && tsc"
     },
     "devDependencies": {
         "@types/node": "^17.0.31",
+        "cross-env": "^7.0.3",
         "node-fetch": "^3.2.4",
         "rimraf": "^3.0.2",
         "ts-node": "^10.7.0",
