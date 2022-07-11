@@ -1,12 +1,15 @@
+import { createHash } from "crypto";
 import { writeFile } from "fs/promises";
-import { BytecodeFile, ProhibitInvoke } from "@hermejs/core";
+import { BytecodeFile, BytecodeFunction, ProhibitInvoke } from "@hermejs/core";
 import { OperandType, OpCode } from "@hermejs/data";
 import { IndentedWriter } from "./IndentedWriter";
 import { performance } from "perf_hooks";
 import { timeAsync, time, comment, escape, quote, logTime } from "./utils";
 import chalk from "chalk";
 
-export async function disassemble(input: string, output: string, skipLabels: boolean) {
+const sha1 = (fn: BytecodeFunction) => createHash("sha1").update(fn.instructions.map(i => OpCode[i.opCode]).join("")).digest("hex");
+
+export async function disassemble(input: string, output: string, skipLabels: boolean, noIds: boolean) {
     const start = performance.now();
 
     console.log("Disassembling " + chalk.yellowBright(input));
@@ -23,14 +26,15 @@ export async function disassemble(input: string, output: string, skipLabels: boo
             const options = new Map<string, string>();
 
             if (fun.name) {
-                options.set("name", fun.header.functionName + " " + comment(escape(fun.name)));
+                options.set("name", (noIds ? "" : fun.header.functionName + " ") + comment(escape(fun.name)));
             }
 
             if (fun.prohibitInvoke !== ProhibitInvoke.ProhibitNone) {
                 options.set("prohibitInvoke", ProhibitInvoke[fun.prohibitInvoke]);
             }
 
-            writer.writeLine(`function ${i}${options.size === 0 ? "" : ` (${Array.from(options.entries()).map(([k, v]) => `${k} = ${v}`).join(", ")})`} {`);
+            const funId = noIds ? fun.name ? "" : sha1(fun) + " " : i + " ";
+            writer.writeLine(`function ${funId}${options.size === 0 ? "" : `(${Array.from(options.entries()).map(([k, v]) => `${k} = ${v}`).join(", ")}) `}{`);
             writer.indent += 2;
 
             if (!skipLabels) fun.detectLabels();
@@ -54,14 +58,16 @@ export async function disassemble(input: string, output: string, skipLabels: boo
                         case OperandType.Imm32:
                         case OperandType.Double:
                             if (closureOpCodes.includes(instruction.opCode) && i == 2) {
-                                const name = file.functions[operand.value].name;
-                                if (name) return operand.value + " " + comment(escape(name));
+                                const fn: BytecodeFunction = file.functions[operand.value];
+                                const name = fn.name;
+                                if (name) return (noIds ? "" : operand.value + " ") + comment(escape(name));
+                                else if (noIds) return comment(sha1(fn));
                             }
                             if (instruction.targetLabel !== undefined && i == 0) {
                                 return "L" + instruction.targetLabel;
                             }
                             if (operand.stringId) {
-                                return operand.value + " " + comment(quote(escape(file.strings[operand.value])));
+                                return (noIds ? "" : operand.value + " ") + comment(quote(escape(file.strings[operand.value])));
                             }
                             return operand.value;
                     }
@@ -74,11 +80,11 @@ export async function disassemble(input: string, output: string, skipLabels: boo
         });
     });
 
-    time("Wrote strings", () => {
-        file.strings.forEach((string, i) => {
-            writer.writeLine(`string ${i} ${quote(escape(string))}`);
-        });
-    });
+    // time("Wrote strings", () => {
+    //     file.strings.forEach((string, i) => {
+    //         writer.writeLine(`string ${i} ${quote(escape(string))}`);
+    //     });
+    // });
 
     await timeAsync("Wrote to " + chalk.yellow(output), writeFile(output, writer.text));
 

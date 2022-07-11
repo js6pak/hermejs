@@ -7,9 +7,10 @@ program
     .command("disassemble <input> [output]")
     .alias("d")
     .option("--skip-labels", undefined, false)
-    .action(async (input: string, output: string | undefined, { skipLabels }: { skipLabels: boolean }) => {
+    .option("--no-ids", undefined, false)
+    .action(async (input: string, output: string | undefined, { skipLabels, ids }: { skipLabels: boolean, ids: boolean }) => {
         if (output === undefined) output = input + ".hasm";
-        await disassemble(input, output, skipLabels);
+        await disassemble(input, output, skipLabels, !ids);
     });
 
 await program.parseAsync();
