@@ -53,7 +53,7 @@ export async function disassemble(input: string, output: string, skipLabels: boo
                         case OperandType.Addr32:
                         case OperandType.Imm32:
                         case OperandType.Double:
-                            if (closureOpCodes.includes(instruction.opCode) && i == 2) {
+                            if (operand.functionId) {
                                 const name = file.functions[operand.value].name;
                                 if (name) return operand.value + " " + comment(escape(name));
                             }

@@ -5,7 +5,7 @@ import { BytecodeList } from "./BytecodeList";
 
 const { factory, createPrinter, createSourceFile, NewLineKind, ScriptTarget, ScriptKind, SyntaxKind } = ts;
 
-const hermesVersion = "v0.11.0";
+const hermesVersion = "hermes-2022-09-14-RNv0.70.1-2a6b111ab289b55d7b78b5fdf105f466ba270fd7";
 console.log("Hermes version: " + hermesVersion);
 
 const bytecodeVersionSource = await (await fetch(`https://raw.githubusercontent.com/facebook/hermes/${hermesVersion}/include/hermes/BCGen/HBC/BytecodeVersion.h`)).text();
@@ -155,6 +155,18 @@ await saveFile("generated/OpCode.ts", [
                                     ),
                                     factory.createPropertySignature(
                                         undefined,
+                                        factory.createIdentifier("bigintId"),
+                                        factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
+                                    ),
+                                    factory.createPropertySignature(
+                                        undefined,
+                                        factory.createIdentifier("functionId"),
+                                        factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
+                                    ),
+                                    factory.createPropertySignature(
+                                        undefined,
                                         factory.createIdentifier("stringId"),
                                         factory.createToken(ts.SyntaxKind.QuestionToken),
                                         factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword)
@@ -189,7 +201,13 @@ await saveFile("generated/OpCode.ts", [
                                                         factory.createIdentifier("OperandType"),
                                                         factory.createIdentifier(operand.type)
                                                     )
-                                                )].pushIf(operand.stringId, factory.createPropertyAssignment(
+                                                )].pushIf(operand.bigintId, factory.createPropertyAssignment(
+                                                    factory.createIdentifier("bigintId"),
+                                                    factory.createTrue()
+                                                )).pushIf(operand.functionId, factory.createPropertyAssignment(
+                                                    factory.createIdentifier("functionId"),
+                                                    factory.createTrue()
+                                                )).pushIf(operand.stringId, factory.createPropertyAssignment(
                                                     factory.createIdentifier("stringId"),
                                                     factory.createTrue()
                                                 )),

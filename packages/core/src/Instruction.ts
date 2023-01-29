@@ -3,6 +3,7 @@ import { OpCode, OperandType } from "@hermejs/data";
 export interface Operand {
     type: OperandType;
     value: number;
+    functionId: boolean;
     stringId: boolean;
 }
 
