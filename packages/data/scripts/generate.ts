@@ -5,7 +5,7 @@ import { BytecodeList } from "./BytecodeList";
 
 const { factory, createPrinter, createSourceFile, NewLineKind, ScriptTarget, ScriptKind, SyntaxKind } = ts;
 
-const hermesVersion = "v0.12.0";
+const hermesVersion = "hermes-2022-09-14-RNv0.70.1-2a6b111ab289b55d7b78b5fdf105f466ba270fd7";
 console.log("Hermes version: " + hermesVersion);
 
 const bytecodeVersionSource = await (await fetch(`https://raw.githubusercontent.com/facebook/hermes/${hermesVersion}/include/hermes/BCGen/HBC/BytecodeVersion.h`)).text();
