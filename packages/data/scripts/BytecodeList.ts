@@ -1,4 +1,6 @@
 export class OperandDefinition {
+    public bigintId = false;
+    public functionId = false;
     public stringId = false;
 
     constructor(public type: string) {
@@ -105,6 +107,22 @@ export class BytecodeList {
                         const opCode = opCodes.get(parameters[0]);
                         if (opCode === undefined) throw new Error("Failed to find opcode with id " + parameters[0]);
                         opCode.isCallType = true;
+                        continue;
+                    }
+
+                    case "OPERAND_FUNCTION_ID": {
+                        verifyParameterCount(2);
+                        const opCode = opCodes.get(parameters[0]);
+                        if (opCode === undefined) throw new Error("Failed to find opcode with id " + parameters[0]);
+                        opCode.operands[Number(parameters[1]) - 1].functionId = true;
+                        continue;
+                    }
+
+                    case "OPERAND_BIGINT_ID": {
+                        verifyParameterCount(2);
+                        const opCode = opCodes.get(parameters[0]);
+                        if (opCode === undefined) throw new Error("Failed to find opcode with id " + parameters[0]);
+                        opCode.operands[Number(parameters[1]) - 1].bigintId = true;
                         continue;
                     }
                 }

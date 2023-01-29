@@ -24,7 +24,16 @@ export class BytecodeFunction {
                 const offset = functionReader.position;
                 const opCode = functionReader.uint8() as OpCode;
 
-                const instruction = { offset, opCode, operands: OpCodeMetaData[opCode].operands.map(info => ({ type: info.type, value: functionReader.operand(info.type), stringId: info.stringId ?? false })) };
+                const instruction = {
+                    offset,
+                    opCode,
+                    operands: OpCodeMetaData[opCode].operands.map(info => ({
+                        type: info.type,
+                        value: functionReader.operand(info.type),
+                        functionId: info.functionId ?? false,
+                        stringId: info.stringId ?? false
+                    }))
+                };
                 instructions.push(instruction);
                 this._instructionsByOffset[offset] = instruction;
             }
